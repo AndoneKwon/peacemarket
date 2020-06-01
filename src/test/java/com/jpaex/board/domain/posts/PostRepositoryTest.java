@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,9 +28,11 @@ public class PostRepositoryTest {
         String title="first board";
         String content ="first content";
 
+        LocalDateTime now = LocalDateTime.of(2020,5,1,0,0,0);
+
         postRepository.save(Post.builder()
             .title(title)
-            .contents(content)
+            .content(content)
             .author("wlsdn110@gmail.com")
             .build());
 
@@ -37,7 +40,9 @@ public class PostRepositoryTest {
 
         Post post = postList.get(0);
         assertThat(post.getTitle()).isEqualTo(title);
-        assertThat(post.getContents()).isEqualTo(content);
+        assertThat(post.getContent()).isEqualTo(content);
+        assertThat(post.getCreatedDate()).isAfter(now);
+        assertThat(post.getUpdatedDate()).isAfter(now);
     }
 
 

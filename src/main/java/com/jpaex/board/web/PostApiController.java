@@ -9,27 +9,32 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+import java.util.Map;
+/*
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/posts")
-public class PostController {
-    private final PostService postService;
+public class PostApiController {
+    private PostService postService;
 
     @PostMapping("/create")
     public Long save(@RequestBody PostSaveRequestDto requestDto){
         return postService.save(requestDto);
     }
-    @PostMapping(value = "/update/{id}")
-    public Long update(@PathVariable("id") Long id, @RequestBody PostUpdateRequestDto requestDto){
-        System.out.println(id);
+
+    @RequestMapping(value = "/getPost",method = RequestMethod.GET)
+    public PostResponseDto findById(@PathVariable Long id){
+        return postService.findById(id);
+    }
+
+    @GetMapping(value = "/update/{id}")
+    public Long update(@PathVariable Long id,@RequestBody PostUpdateRequestDto requestDto){
         return postService.update(id,requestDto);
     }
 
 
-    @GetMapping("{id}")
-    public PostResponseDto findById(@PathVariable("id")  Long id){
-        System.out.println(id);
+    @GetMapping("/{id}")
+    public PostResponseDto findById(@RequestParam Long id){
         return postService.findById(id);
 
     }
@@ -45,4 +50,6 @@ public class PostController {
     public List<PostListResponseDto> findAll() {
         return postService.findAllDesc();
     }
+
 }
+*/

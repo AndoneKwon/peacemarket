@@ -12,9 +12,5 @@ import org.springframework.web.bind.annotation.RestController;
 public class PostController {
     private final PostService postService;
 
-    @PostMapping("/api/v1/post")
-    public Long save(@RequestBody PostSaveRequestDto requestDto){
-        return postService.save(requestDto);
-    }
 
 }

@@ -1,5 +1,6 @@
 package com.jpaex.board.domain.posts;
 
+import com.jpaex.board.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,34 +11,28 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Post{
+public class Post extends BaseTimeEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(length = 500, nullable = false)
     private String title;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
-    private String contents;
-
+    @Column(columnDefinition = "TEXT")
+    private String content;
     private String author;
 
-    private String photo1;
-    private String photo2;
-    private String photo3;
-    private String photo4;
-    private String photo5;
-    private String photo6;
-    private String photo7;
-    private String photo8;
-    private String photo9;
-    private String photo10;
 
     @Builder
-    public Post(String title,String contents,String author){
+    public Post(String title,String content,String author){
         this.title = title;
-        this.contents = contents;
+        this.content = content;
         this.author = author;
+    }
+
+    public void update(String title, String content){
+        this.title=title;
+        this.content=content;
     }
 }

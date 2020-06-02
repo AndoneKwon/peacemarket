@@ -28,7 +28,8 @@ public class PostService {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. id=" + id));
 
-        post.update(requestDto.getTitle(), requestDto.getContent());
+        post.update(requestDto.getTitle(), requestDto.getContent(),requestDto.getPhoto1(),requestDto.getPhoto2(),requestDto.getPhoto3(),
+                requestDto.getPhoto4(),requestDto.getPhoto5(),requestDto.getPhoto6(),requestDto.getPhoto7(),requestDto.getPhoto8(),requestDto.getPhoto9(),requestDto.getPhoto10());
 
         return id;
     }
@@ -45,8 +46,14 @@ public class PostService {
     public PostResponseDto findById(Long id) {
         Post entity = postRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 없습니다. id=" + id));
-
         return new PostResponseDto(entity);
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostListResponseDto> findByAuthor(String author){
+        return postRepository.findByAuthor(author).stream()
+                .map(PostListResponseDto::new)
+                .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)

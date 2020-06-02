@@ -41,6 +41,7 @@ public class PostRepositoryTest {
         Post post = postList.get(0);
         assertThat(post.getTitle()).isEqualTo(title);
         assertThat(post.getContent()).isEqualTo(content);
+        assertThat(post.getPhoto1()).isEqualTo(null);
         assertThat(post.getCreatedDate()).isAfter(now);
         assertThat(post.getUpdatedDate()).isAfter(now);
     }

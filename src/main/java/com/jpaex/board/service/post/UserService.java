@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,34 +16,31 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Slf4j
 public class UserService {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     //PasswordEncoder passwordEncoder;
 
     @Transactional
     public String join(UserJoinDto userJoinDto){
-        logger.info(userJoinDto.toEntity().getPassword());
-        userRepository.save(userJoinDto.toEntity());
-        return "GGGG";
+        try{
+            logger.info(userJoinDto.toEntity().getPassword());
+            userRepository.save(userJoinDto.toEntity());
+            return "Success";
+        }finally {
+            return "Fail";
+        }
+
     }
 
-    /*
     @Transactional
-    public UserLoginResponseDto login(UserLoginDto userLoginDto){
-        return userRepository.toEntity(entity);
-    }
-*/
-
     public String login(UserLoginRequestDto loginDto){
         User user=userRepository.findByEmail(loginDto.getEmail());
-        //logger.info(loginDto.getEmail());
-        //System.out.println(user);
-        return loginDto.getEmail();
-        /*
         if(user==null){
+            return "No Email";
+        }else {
 
+            return loginDto.getEmail();
         }
-        */
     }
 }

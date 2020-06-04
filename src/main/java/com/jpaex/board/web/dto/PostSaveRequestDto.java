@@ -27,7 +27,7 @@ public class PostSaveRequestDto {
         this.title = title;
         this.content = content;
         this.author = author;
-        this.author = author;
+        //this.author = author; -> 불필요한 중복 제거
         this.photo1 = photo1;
         this.photo2 = photo2;
         this.photo3 = photo3;

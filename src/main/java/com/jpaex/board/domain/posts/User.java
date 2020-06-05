@@ -3,58 +3,63 @@ package com.jpaex.board.domain.posts;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jpaex.board.domain.BaseTimeEntity;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.sun.istack.Nullable;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Table(name = "User")
+@Table(name = "User", uniqueConstraints = @UniqueConstraint(name = "UNIQUE_USER",columnNames = {"EMAIL","PHONE","NICKNAME"}))
 @Getter
+@Setter
 @NoArgsConstructor
 @Entity
 public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
-    @Column
-    //@NonNull
-    String email;
+    @Column(name="EMAIL",nullable = false)
+    @NonNull
+    private String email;
 
-    @Column
-    //@NonNull
+    @Column(nullable = false)
+    @NonNull
     @JsonIgnore
-    String password; //password
-/*
-    @Column
-    char gender;
+    private String password; //password
 
     @Column
-    //@NonNull
-    String address;
+    @Nullable
+    private char gender;
 
-    @Column
-    //@NonNull
-    String phoneNumber;
+    @Column(nullable = false)
+    @NonNull
+    private String address;
 
-    @Column
-    //@NonNull
-    String nickName;
-*/
-    @Column
-    //@NonNull
+    @Column(name="PHONE",nullable = false)
+    @NonNull
+    private String phoneNumber;
+
+    @Column(name="NICKNAME",nullable = false)
+    @NonNull
+    private String nickname;
+
+    @Column(nullable = false)
+    @NonNull
     String salt;
 
+    @Column(columnDefinition = "TINYINT(1) default 5")
+    Byte auth;
+
     @Builder
-    public User(String email, String password, char gender, String address, String phoneNumber, String nickName,String salt){
+    public User(String email, String password, char gender, String address, String phoneNumber, String nickName,String salt,Byte auth){
         this.email=email;
         this.password=password;
-        //this.gender=gender;
-        //this.address=address;
-        //this.phoneNumber=phoneNumber;
-        //this.nickName=nickName;
+        this.gender=gender;
+        this.address=address;
+        this.phoneNumber=phoneNumber;
+        this.nickname=nickName;
         this.salt=salt;
+        this.auth=auth;
     }
 }

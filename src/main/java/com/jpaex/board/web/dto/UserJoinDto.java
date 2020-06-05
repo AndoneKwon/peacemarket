@@ -2,37 +2,43 @@ package com.jpaex.board.web.dto;
 
 import com.jpaex.board.domain.posts.User;
 import lombok.Builder;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Setter
 public class UserJoinDto {
+    private final Logger logger= LoggerFactory.getLogger(this.getClass());
     private String email;
     private String password;
     private char gender;
     private String address;
     private String phoneNumber;
-    private String nickName;
-    private String salt=Integer.toString((int)(Math.random()*10000));
-    private final Logger logger= LoggerFactory.getLogger(this.getClass());
+    private String nickname;
+    private String salt=Integer.toString((int)(Math.random()*10000000));
+    private Byte auth=5;
 
     @Builder
-    public UserJoinDto(String email,String password,char gender, String address,String phoneNumber,String nickName){
+    public UserJoinDto(String email,String password,char gender, String address,String phoneNumber,String nickName,String salt,Byte auth){
         this.email=email;
         this.password=password;
-        /*
         this.gender=gender;
         this.address=address;
         this.phoneNumber=phoneNumber;
-        this.nickName=nickName;
-
-         */
+        this.nickname=nickName;
+        //this.auth=auth;
+        //this.salt=salt;
     }
 
     public User toEntity(){
-        logger.info("test:"+salt);
         return User.builder()
                 .email(email)
                 .password(password)
+                .gender(gender)
+                .address(address)
+                .phoneNumber(phoneNumber)
+                .nickName(nickname)
+                .auth(auth)
                 .salt(salt)
                 .build();
     }

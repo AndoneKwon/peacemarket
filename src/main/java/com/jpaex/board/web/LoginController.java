@@ -18,11 +18,7 @@ public class LoginController {
 
     @PostMapping("/join")
     public String join(@RequestBody UserJoinDto userJoinDto){
-        logger.info("Test1");
-        //logger.info(userJoinDto.toEntity().getEmail());
-        userService.join(userJoinDto);
-        return "Success";
-
+        return userService.join(userJoinDto);
     }
 
     @PostMapping("/login")

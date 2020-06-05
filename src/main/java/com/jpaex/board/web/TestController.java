@@ -1,12 +1,13 @@
 package com.jpaex.board.web;
 
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class HelloController {
-    @GetMapping("/hello")
-    public String hello(){
-        return "index";
+public class TestController {
+    @GetMapping("/test")
+    public String test(){
+        return "all/test";
     }
 }

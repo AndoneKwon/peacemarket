@@ -61,7 +61,7 @@ public class PostController {
     }
 
     @RequestMapping("/uploadMultipleFiles")
-    public String fileupload(HttpServletRequest request, @RequestParam("files") List<MultipartFile> files){
+    public String fileupload(HttpServletRequest request, @RequestBody List<MultipartFile> files){
         logger.info("try upload 1");
         try{
             logger.info("try upload 2");

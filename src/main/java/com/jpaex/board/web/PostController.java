@@ -11,9 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -60,33 +60,18 @@ public class PostController {
         return postService.findAllDesc();
     }
 
-    @PostMapping("/uploadMultipleFiles")
-    public  String uploadMultipleFiles(@RequestParam("description") String[] descriptions,@RequestParam("file") MultipartFile[] files) {
-        if (files.length != descriptions.length)
-            return "Mismatching no of files are equal to description";
-        String status = "";
-        File dir = new File("/Users/gwonjin-u/IdeaProjects/boardEx/src/main/resources");
-
-        for (int i = 0; i < files.length; i++) {
-            MultipartFile file = files[i];
-            String description = descriptions[i];
-            try {
-                byte[] bytes = file.getBytes();
-
-                if (!dir.exists())
-                    dir.mkdirs();
-
-                File uploadFile = new File(dir.getAbsolutePath()
-                        + File.separator + file.getOriginalFilename());
-                BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(uploadFile));
-                outputStream.write(bytes);
-                outputStream.close();
-
-                status = status + "You successfully uploaded file=" + file.getOriginalFilename();
-            } catch (Exception e) {
-                status = status + "Failed to upload " + file.getOriginalFilename()+ " " + e.getMessage();
+    @RequestMapping("/uploadMultipleFiles")
+    public String fileupload(HttpServletRequest request, @RequestParam("files") List<MultipartFile> files){
+        logger.info("try upload 1");
+        try{
+            logger.info("try upload 2");
+            logger.info(Integer.toString(files.size()));
+            for(int i=0;i<files.size();i++){
+                files.get(i).transferTo(new File("/Users/gwonjin-u/IdeaProjects/boardEx/src/main/resources/static/img/"+files.get(i).getOriginalFilename()));
             }
+        }catch (IllegalStateException | IOException e){
+            e.printStackTrace();
         }
-        return status;
+        return "file upload";
     }
 }

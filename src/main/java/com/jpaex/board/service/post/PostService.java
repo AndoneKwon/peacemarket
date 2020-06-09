@@ -7,6 +7,8 @@ import com.jpaex.board.web.dto.PostResponseDto;
 import com.jpaex.board.web.dto.PostSaveRequestDto;
 import com.jpaex.board.web.dto.PostUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,9 +19,12 @@ import java.util.stream.Collectors;
 @Service
 public class PostService {
     private final PostRepository postRepository;
+    private final Logger logger= LoggerFactory.getLogger(this.getClass());
+
 
     @Transactional
     public Long save(PostSaveRequestDto requestDto){
+        logger.info("Service : "+requestDto.getPhoto1());
         return postRepository.save(requestDto.toEntity()).getId();
     }
 

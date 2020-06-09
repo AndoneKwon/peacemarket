@@ -4,8 +4,10 @@ import com.jpaex.board.domain.posts.Post;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor //기본생성자 자동 생성 어노테이
 public class PostSaveRequestDto {
     private String title;
@@ -23,7 +25,7 @@ public class PostSaveRequestDto {
     private String photo10;
 
     @Builder
-    public PostSaveRequestDto(String title, String content, String author){
+    public PostSaveRequestDto(String title, String content, String author,String photo1,String photo2,String photo3,String photo4,String photo5,String photo6,String photo7,String photo8,String photo9,String photo10){
         this.title = title;
         this.content = content;
         this.author = author;
@@ -46,15 +48,15 @@ public class PostSaveRequestDto {
                 .content(content)
                 .author(author)
                 .photo1(photo1)
-                .photo1(photo2)
-                .photo1(photo3)
-                .photo1(photo4)
-                .photo1(photo5)
-                .photo1(photo6)
-                .photo1(photo7)
-                .photo1(photo8)
-                .photo1(photo9)
-                .photo1(photo10)
+                .photo2(photo2)
+                .photo3(photo3)
+                .photo4(photo4)
+                .photo5(photo5)
+                .photo6(photo6)
+                .photo7(photo7)
+                .photo8(photo8)
+                .photo9(photo9)
+                .photo10(photo10)
                 .build();
     }
 }

@@ -10,4 +10,5 @@ public interface PostRepository extends JpaRepository<Post,Long> {
     List<Post> findAllDesc();
     //@Query(value = "SELECT p FROM Post p WHERE p.author=?1")
     List<Post> findByAuthor(String author);
+    List<Post> findByTitleLike(String title);
 }

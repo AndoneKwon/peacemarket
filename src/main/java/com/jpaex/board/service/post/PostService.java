@@ -66,4 +66,11 @@ public class PostService {
                 .map(PostListResponseDto::new)
                 .collect(Collectors.toList());
     }
+
+    @Transactional(readOnly = true)
+    public List<PostListResponseDto> findByTitle(String title){
+        return postRepository.findByTitleLike(title).stream()
+                .map(PostListResponseDto::new)
+                .collect(Collectors.toList());
+    }
 }

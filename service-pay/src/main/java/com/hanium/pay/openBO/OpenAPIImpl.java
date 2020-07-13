@@ -51,9 +51,10 @@ public class OpenAPIImpl implements OpenAPI{
             sb.append("response_type=code");
             sb.append("&client_id="+API_KEY);
             sb.append("&scope=login");
-            sb.append("&state=12345645661234564566123456456633");
+            sb.append("&client_info=asdfsadf312rf13213123");
+            sb.append("&state=12345678901234567890123456789012");
             sb.append("&auth_type=0");
-            sb.append("&redirect_uri=http://localhost:8080/login");
+            sb.append("&redirect_uri=http://127.0.0.1:8080/test");
             bw.write(sb.toString());
             bw.flush();
 

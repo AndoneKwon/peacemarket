@@ -19,6 +19,14 @@ public class PayController {
     @Autowired
     private OpenAPI open;
 
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String Test(){
+        String auth_Code = open.getAuthCode();
+        List<String> tokens = open.getAccessToken(auth_Code);
+
+        return tokens.get(0);
+    }
+
     @RequestMapping(value ="/auth", method=RequestMethod.GET)
     public void OpenAuth(HttpServletResponse response){
         String auth_Code = open.getAuthCode();

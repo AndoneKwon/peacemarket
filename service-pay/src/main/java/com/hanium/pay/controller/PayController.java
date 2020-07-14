@@ -2,12 +2,14 @@ package com.hanium.pay.controller;
 
 
 import com.hanium.pay.openBO.OpenAPI;
+import com.hanium.pay.openBO.OpenAPIAuth;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -19,21 +21,28 @@ public class PayController {
     @Autowired
     private OpenAPI open;
 
+    @Autowired
+    private OpenAPIAuth auth;
+
+
     @RequestMapping(value = "/test", method = RequestMethod.GET)
-    public String Test(){
-        String auth_Code = open.getAuthCode();
-        List<String> tokens = open.getAccessToken(auth_Code);
+    public RedirectView Test(){
 
-        return tokens.get(0);
+        RedirectView redirectView = new RedirectView();
+        System.out.println("KEY  " + auth.getURL());
+        redirectView.setUrl(auth.getURL());
+        return redirectView;
+
+
     }
 
-    @RequestMapping(value ="/auth", method=RequestMethod.GET)
-    public void OpenAuth(HttpServletResponse response){
-        String auth_Code = open.getAuthCode();
-    }
+//    @RequestMapping(value ="/auth", method=RequestMethod.GET)
+//    public void OpenAuth(HttpServletResponse response){
+//        String auth_Code = open.getAuthCode();
+//    }
 
     @RequestMapping(value="/login", method = RequestMethod.POST)
-    public void OpenLogin(@RequestParam("code") String code, HttpServletResponse response ) {
+    public String OpenLogin(@RequestParam("code") String code, HttpServletResponse response ) {
 
         List<String> tokens = open.getAccessToken(code);
         log.info("code  : " + code +"\n"+ "Aceess : " + tokens.get(0)+"\n" + "Refresh : " + tokens.get(1));
@@ -41,6 +50,7 @@ public class PayController {
         String acces_token = new String(tokens.get(0));
         String refresh_token = new String(tokens.get(1));
 
+        return acces_token;
 
 
     }

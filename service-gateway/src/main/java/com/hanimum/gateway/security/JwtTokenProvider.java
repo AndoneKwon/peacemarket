@@ -29,18 +29,6 @@ public class JwtTokenProvider {
 	private int jwtExpirationInMs;
 	
 	
-	public String generateToken(Authentication authentication) {
-		
-		UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-		
-		Date now = new Date();
-		Date expiryDate = new Date(now.getTime()+ jwtExpirationInMs);
-		
-		return Jwts.builder().setSubject(Long.toString(userPrincipal.getId())).setIssuedAt(new Date()).setExpiration(expiryDate)
-				.signWith(SignatureAlgorithm.HS512, jwtSecret).compact();
-	}
-	
-	
 	public Long getUseridFromJWT(String token) {
 		Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
 		

@@ -3,15 +3,15 @@ package com.hanium.pay.controller;
 
 import com.hanium.pay.openBO.OpenAPI;
 import com.hanium.pay.openBO.OpenAPIAuth;
+import com.hanium.pay.payload.UserTrade;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -51,6 +51,11 @@ public class PayController {
         String refresh_token = new String(tokens.get(1));
 
         return acces_token;
+
+    }
+
+    @PostMapping("/trade")
+    public ResponseEntity<?> trade(@Valid @RequestBody UserTrade userTrade){
 
 
     }

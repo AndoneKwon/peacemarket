@@ -1,11 +1,15 @@
 package com.hanium.pay.controller;
 
 
+import com.hanium.pay.model.Trade;
 import com.hanium.pay.openBO.OpenAPI;
 import com.hanium.pay.openBO.OpenAPIAuth;
-import com.hanium.pay.payload.UserTrade;
+import com.hanium.pay.payload.request.UserTradeRequest;
+import com.hanium.pay.payload.response.ApiResponse;
+import com.hanium.pay.service.TradeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
@@ -23,6 +27,9 @@ public class PayController {
 
     @Autowired
     private OpenAPIAuth auth;
+
+    @Autowired
+    private TradeService tradeService;
 
 
     @RequestMapping(value = "/test", method = RequestMethod.GET)
@@ -55,7 +62,20 @@ public class PayController {
     }
 
     @PostMapping("/trade")
-    public ResponseEntity<?> trade(@Valid @RequestBody UserTrade userTrade){
+    public ResponseEntity<?> trade(@Valid @RequestBody UserTradeRequest userTradeRequest){
+
+
+
+        //여기서 관련된 API소스들 호출함(외부 DB 연결 API 호출)
+
+
+        Trade trade = new Trade(userTradeRequest.getConsumer(), userTradeRequest.getProuder(), userTradeRequest.getGoodsId(), userTradeRequest.getPrice(),
+                userTradeRequest.getTradeType());
+
+        tradeService.tradeHandling(trade);
+
+
+        return new ResponseEntity(new ApiResponse(true, "Success"), HttpStatus.OK);
 
 
     }

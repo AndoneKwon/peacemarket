@@ -1,10 +1,11 @@
-package com.hanium.pay.payload;
+package com.hanium.pay.payload.request;
 
 
+import com.hanium.pay.model.TradeType;
 import lombok.Getter;
 
 @Getter
-public class UserTrade {
+public class UserTradeRequest {
 
 
     private String consumer;
@@ -14,6 +15,8 @@ public class UserTrade {
     private String goodsId;
 
     private String price;
+
+    private TradeType tradeType;
 
 
     public void setConsumer(String consumer){
@@ -31,5 +34,7 @@ public class UserTrade {
     public  void setPrice(String price){
         this.price = price;
     }
+
+    public void setTradeType(TradeType tradeType){ this.tradeType = tradeType;}
 
 }

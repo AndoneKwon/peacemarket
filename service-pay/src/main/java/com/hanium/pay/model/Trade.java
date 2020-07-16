@@ -26,7 +26,21 @@ public class Trade {
 
     private String price;
 
+    @Enumerated(EnumType.STRING)
+    private TradeType tradeType;
+
+
+
     private LocalDateTime tradeTime;
+
+    public Trade(String consumer, String producer, String goodsId, String price, TradeType tradeType){
+        this.consumer = consumer;
+        this.producer = producer;
+        this.goodsId = goodsId;
+        this.price = price;
+        this.tradeType = tradeType;
+        tradeTime();
+    }
 
     public void setConsumer(String consumer){
         this.consumer = consumer;
@@ -42,6 +56,10 @@ public class Trade {
 
     public  void setPrice(String price){
         this.price = price;
+    }
+
+    public  void setTradeType(TradeType tradeType){
+        this.tradeType = tradeType;
     }
 
     @PrePersist

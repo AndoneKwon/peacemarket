@@ -30,73 +30,13 @@ public class OpenAPIImpl implements OpenAPI{
     String SECRET_KEY = "";
 
     @Override
-    public String getAuthCode(){
-        String auth_Code = "";
-        String reqURL = "https://openapi.openbanking.or.kr/oauth/2.0/authorize";
-
-        try {
-            URL url = new URL(reqURL);
-            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-
-            //hader config
-            //conn.setRequestProperty("Kftc-Bfop-UserSeqNo", "15161561");
-
-            //GET config
-            conn.setRequestMethod("GET");
-            conn.setDoOutput(true);
-
-            //parameter Stream sending
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-            StringBuilder sb = new StringBuilder();
-            sb.append("response_type=code");
-            sb.append("&client_id="+API_KEY);
-            sb.append("&scope=login");
-            sb.append("&client_info=asdfsadf312rf13213123");
-            sb.append("&state=12345678901234567890123456789012");
-            sb.append("&auth_type=0");
-            sb.append("&redirect_uri=http://127.0.0.1:8080/test");
-            bw.write(sb.toString());
-            bw.flush();
-
-            int responseCode = conn.getResponseCode();
-            log.info("responose : "+responseCode);
-
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String line = "";
-            String result = "";
-
-            while ((line = br.readLine()) != null) {
-                result += line;
-            }
-            System.out.println("response body : " + result);
-
-
-            JsonParser parser = new JsonParser();
-            JsonElement element = parser.parse(result);
-
-            auth_Code = element.getAsJsonObject().get("code").getAsString();
-
-           System.out.println("auth_code : " + auth_Code);
-
-            br.close();
-            bw.close();
-
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-
-        return auth_Code;
-
-    }
-
-    @Override
     public List<String> getAccessToken(String authorize_code) {
 
+        log.info(authorize_code);
 
         String access_Token = "";
         String refresh_Token = "";
-        String reqURL = "https://openapi.openbanking.or.kr/oauth/2.0/token";
+        String reqURL = "https://testapi.openbanking.or.kr/oauth/2.0/token";
 
         try {
             URL url = new URL(reqURL);
@@ -106,14 +46,19 @@ public class OpenAPIImpl implements OpenAPI{
             conn.setRequestMethod("POST");
             conn.setDoOutput(true);
 
+            //Header config
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            conn.setRequestProperty("charset", "utf-8");
+
             //parameter Stream sending
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
             StringBuilder sb = new StringBuilder();
-            sb.append("code =" + authorize_code);
+            sb.append("code=" + authorize_code);
             sb.append("&client_id="+API_KEY);
-            sb.append("&client_secret"+SECRET_KEY);
-            sb.append("&redirect_uri=http://localhost:8080/pay");
+            sb.append("&client_secret="+SECRET_KEY);
+            sb.append("&redirect_uri=http://localhost:8080/login");
             sb.append("&grant_type=authorization_code");
+            System.out.println(sb.toString());
             bw.write(sb.toString());
             bw.flush();
 

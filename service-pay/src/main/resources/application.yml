@@ -15,7 +15,7 @@
 #  datasource:
 #    hikari:
 #      driver-class-name: com.mysql.cj.jdbc.Driver
-#      jdbc-url: jdbc:mysql://localhost:3306/login?serverTimezone=UTC&characterEncoding=UTF-8
+#      jdbc-url: jdbc:mysql://localhost:3306/testlogin?serverTimezone=UTC&characterEncoding=UTF-8
 #      username: root
 #      password: password
 #      connection-test-query: SELECT 1

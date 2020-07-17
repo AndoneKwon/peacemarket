@@ -48,7 +48,7 @@ public class PayController {
 //        String auth_Code = open.getAuthCode();
 //    }
 
-    @RequestMapping(value="/login", method = RequestMethod.POST)
+    @RequestMapping(value="/login", method = RequestMethod.GET)
     public String OpenLogin(@RequestParam("code") String code, HttpServletResponse response ) {
 
         List<String> tokens = open.getAccessToken(code);

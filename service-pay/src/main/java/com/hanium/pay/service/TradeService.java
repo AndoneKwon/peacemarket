@@ -29,7 +29,6 @@ public class TradeService {
         UserPoint ProducerTest = new UserPoint("abc", "200");
 
         //consumer 포인트 차감
-        result = template.postForObject("http://localhost:8080/user/trade", UserPoint.class);
 
         //producer 포인트 차감
 

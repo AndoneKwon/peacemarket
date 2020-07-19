@@ -1,22 +1,26 @@
 package com.hanium.pay.controller;
 
 
+import com.hanium.pay.adapter.ParticipationRequest;
 import com.hanium.pay.model.Trade;
 import com.hanium.pay.openBO.OpenAPI;
 import com.hanium.pay.openBO.OpenAPIAuth;
+import com.hanium.pay.payload.request.UserPoint;
 import com.hanium.pay.payload.request.UserTradeRequest;
 import com.hanium.pay.payload.response.ApiResponse;
 import com.hanium.pay.service.TradeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.net.URI;
 import java.util.List;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @Slf4j
@@ -39,6 +43,38 @@ public class PayController {
         System.out.println("KEY  " + auth.getURL());
         redirectView.setUrl(auth.getURL());
         return redirectView;
+
+
+    }
+
+    @RequestMapping(value = "/test2", method = RequestMethod.GET)
+    public String Test2(){
+
+        URI uri = URI.create("localhost:8080/test3");
+
+        UserPoint userPoint = new UserPoint("dsfsf", "16165");
+
+        System.out.println(userPoint);
+
+        ParticipationRequest tempPart = new ParticipationRequest("TEST URL", userPoint);
+
+        RequestEntity<Object> request =
+                RequestEntity.post(uri)
+                        .header(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON_VALUE)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .body(tempPart.getRequestBody());
+
+        System.out.println(request.getBody());
+
+        return "ABC";
+
+
+    }
+
+    @RequestMapping(value = "/test3", method = RequestMethod.GET)
+    public String Test3(){
+
+        return "ABC";
 
 
     }

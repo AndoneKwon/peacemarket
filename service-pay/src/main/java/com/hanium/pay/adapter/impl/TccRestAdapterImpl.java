@@ -60,6 +60,8 @@ public class TccRestAdapterImpl implements TccRestAdapter {
         return participantLinks;
     }
 
+
+
     @Override
     public void cancelAll(List<ParticipantLink> participantLinks) {
         participantLinks.forEach(participantLink -> {
@@ -73,6 +75,8 @@ public class TccRestAdapterImpl implements TccRestAdapter {
             }
         });
     }
+
+
 
     @Override
     public void confirmAll(List<ParticipantLink> participantLinks) {

@@ -16,6 +16,8 @@ import java.util.List;
 import javax.net.ssl.HttpsURLConnection;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonElement;
@@ -26,71 +28,81 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Service
 public class OpenAPIImpl implements OpenAPI{
 
-    String API_KEY = "j9mhYBLjb2uQL9PFIhB1FKNUnu3t8AX0Mh7bO08M";
-    String SECRET_KEY = "";
+    @Autowired
+    OpenAPICall openAPICall;
+
 
     @Override
-    public List<String> getAccessToken(String authorize_code) {
+    public String getAuthorizationCode() throws Exception{
+
+            String body = "response_type=code"+
+                    "&client_id="+API_KEY+
+                    "&redirect_uri="+CALL_BACK_URL+
+                    "&scope="+LOGIN_POLICY+
+                    "&state="+STATE+
+                    "&auth_type=0" +
+                    "&cellphone_cert_yn=Y" +
+                    "&authorized_cert_yn=N";
+
+            return BASE_URL+GET_OAUTH+body;
+
+            //return openAPICall.call(BASE_URL, GET_OAUTH, body, HttpMethod.GET, "");
+    }
+
+
+    @Override
+    public List<String> getAccessToken(String authorize_code) throws Exception{
 
         log.info(authorize_code);
 
         String access_Token = "";
         String refresh_Token = "";
-        String reqURL = "https://testapi.openbanking.or.kr/oauth/2.0/token";
+        String body = null;
+        String result = null;
 
-        try {
-            URL url = new URL(reqURL);
-            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        body = "code=" + authorize_code +
+                "&client_id="+API_KEY +
+                "&client_secret="+SECRET_KEY +
+                "&redirect_uri="+CALL_BACK_URL+
+                "&grant_type=authorization_code";
 
-            //POST config
-            conn.setRequestMethod("POST");
-            conn.setDoOutput(true);
-
-            //Header config
-            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            conn.setRequestProperty("charset", "utf-8");
-
-            //parameter Stream sending
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-            StringBuilder sb = new StringBuilder();
-            sb.append("code=" + authorize_code);
-            sb.append("&client_id="+API_KEY);
-            sb.append("&client_secret="+SECRET_KEY);
-            sb.append("&redirect_uri=http://localhost:8080/login");
-            sb.append("&grant_type=authorization_code");
-            System.out.println(sb.toString());
-            bw.write(sb.toString());
-            bw.flush();
-
-            int responseCode = conn.getResponseCode();
-            log.info("responose : "+responseCode);
+        result = openAPICall.call(BASE_URL, GET_TOKEN, body, HttpMethod.POST, "");
 
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String line = "";
-            String result = "";
+        JsonParser parser = new JsonParser();
+        JsonElement element = parser.parse(result);
+        access_Token = element.getAsJsonObject().get("access_token").getAsString();
+        refresh_Token = element.getAsJsonObject().get("refresh_token").getAsString();
 
-            while ((line = br.readLine()) != null) {
-                result += line;
-            }
-            System.out.println("response body : " + result);
+        List<String> tokens = new ArrayList<String>();
+        tokens.add(access_Token);
+        tokens.add(refresh_Token);
+
+        return tokens;
+
+    }
+
+    @Override
+    public List<String> refreshAccessToken(String accessToken) throws Exception{
 
 
-            JsonParser parser = new JsonParser();
-            JsonElement element = parser.parse(result);
+        String access_Token = "";
+        String refresh_Token = "";
+        String body = null;
+        String result = null;
 
-            access_Token = element.getAsJsonObject().get("access_token").getAsString();
-            refresh_Token = element.getAsJsonObject().get("refresh_token").getAsString();
+        body = "refresh_token=" + refresh_Token +
+                "&client_id="+API_KEY +
+                "&client_secret="+SECRET_KEY +
+                "&scope="+OpenAPI.LOGIN_POLICY;
 
-            System.out.println("access_token : " + access_Token);
-            System.out.println("refresh_token : " + refresh_Token);
+        result = openAPICall.call(BASE_URL, GET_TOKEN, body, HttpMethod.POST, "");
 
-            br.close();
-            bw.close();
 
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
+        JsonParser parser = new JsonParser();
+        JsonElement element = parser.parse(result);
+        access_Token = element.getAsJsonObject().get("access_token").getAsString();
+        refresh_Token = element.getAsJsonObject().get("refresh_token").getAsString();
 
         List<String> tokens = new ArrayList<String>();
         tokens.add(access_Token);

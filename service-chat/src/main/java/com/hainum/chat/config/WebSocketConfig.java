@@ -14,8 +14,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer{
 	
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry config) {
-		config.enableSimpleBroker("/sub"); //Request subscribe
-		config.setApplicationDestinationPrefixes("/pub"); //Request publish
+		config.enableSimpleBroker("/topic"); //Request subscribe
+		config.setApplicationDestinationPrefixes("/app"); //Request publish
 	}
 	
 	
@@ -23,7 +23,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer{
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
 		
 		//Connect Websocket path(description path)
-		registry.addEndpoint("/ws-stomp").setAllowedOrigins("*").withSockJS();
+		registry.addEndpoint("/chatting").setAllowedOrigins("*").withSockJS();
 	}
 
 }

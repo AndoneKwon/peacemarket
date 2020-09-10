@@ -1,1 +1,5 @@
 rootProject.name = 'module'
+
+include 'service-chat'
+include 'service-gateway'
+include 'service-pay'

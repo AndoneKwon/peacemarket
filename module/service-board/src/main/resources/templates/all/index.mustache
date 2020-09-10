@@ -1,0 +1,17 @@
+<form action="/posts/create" method="post" enctype="multipart/form-data">
+    <div>
+        <input type="text" name="title">
+        <input type="text" name="content">
+        <input type="text" name="author">
+    </div>
+    <div class="input-field col s6">
+        <input multiple="multiple" type="file" name="files"/>
+    </div>
+    <div class="input-field col s6">
+        <button class="btn indigo waves-effect waves-light"
+                type="submit" name="save">
+
+            Submit<i class="mdi-content-send right"></i>
+        </button>
+    </div>
+</form>

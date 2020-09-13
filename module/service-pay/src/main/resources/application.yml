@@ -1,22 +1,54 @@
-#spring:
-#  profiles:
-#    active: mysql
-#---
-#
-#spring:
-#  profiles: mysql
-#  jpa:
-#    database: mysql
-#    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-#    generate-ddl: true
-#    hibernate:
-#      use-new-id-generator-mappings: false
-#      #ddl-auto: create
-#  datasource:
-#    hikari:
-#      driver-class-name: com.mysql.cj.jdbc.Driver
-#      jdbc-url: jdbc:mysql://localhost:3306/testlogin?serverTimezone=UTC&characterEncoding=UTF-8
-#      username: root
-#      password: password
-#      connection-test-query: SELECT 1
-#---
+server:
+  port: 8093
+
+spring:
+  profiles:
+    active: mysql
+---
+spring:
+  profiles: mysql
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    generate-ddl: true
+    hibernate:
+      use-new-id-generator-mappings: false
+      #ddl-auto: create
+  datasource:
+    hikari:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/test?serverTimezone=UTC&characterEncoding=UTF-8
+      username: user
+      password: user
+      connection-test-query: SELECT 1
+---
+spring:
+  profiles: mongodb
+  data:
+    mongodb:
+      authentication-database: admin
+      username: cat
+      password: whqudrkq
+      database: log
+      port: 27017
+      host: 101.101.209.211
+---
+spring:
+  profiles: redis
+  redis:
+    lettuce:
+      pool:
+        max-idle: 10
+        max-active: 10
+        min-idle: 2
+    port: 6379
+    host: 49.50.166.168
+---
+
+#constant
+openAPI:
+  api: j9mhYBLjb2uQL9PFIhB1FKNUnu3t8AX0Mh7bO08M
+  secret : 3fi41ArBAHryIE0BuCkm1xJCojVsmFRHMr3DHwiB
+
+#linux:
+#  keypath: /home/ftp_user/test-key.pem

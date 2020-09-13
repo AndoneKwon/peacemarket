@@ -1,10 +1,13 @@
 package com.hanium.pay.openBO;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import java.util.*;
 
 public interface OpenAPI {
 
-    String API_KEY = "j9mhYBLjb2uQL9PFIhB1FKNUnu3t8AX0Mh7bO08M";
+    @Value("{openAPI.api}")
+    String API_KEY;
     String SECRET_KEY = "3fi41ArBAHryIE0BuCkm1xJCojVsmFRHMr3DHwiB";
     String CALL_BACK_URL = "http://localhost:8080/login";
 

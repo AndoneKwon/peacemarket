@@ -49,6 +49,7 @@ spring:
 openAPI:
   api: j9mhYBLjb2uQL9PFIhB1FKNUnu3t8AX0Mh7bO08M
   secret : 3fi41ArBAHryIE0BuCkm1xJCojVsmFRHMr3DHwiB
+  state : 12345678901234567890123456789012
 
 #linux:
 #  keypath: /home/ftp_user/test-key.pem

@@ -83,11 +83,7 @@ public class PayController {
     @PostMapping("/trade")
     public ResponseEntity<?> trade(@Valid @RequestBody UserTradeRequest userTradeRequest){
 
-
-
         //여기서 관련된 API소스들 호출함(외부 DB 연결 API 호출)
-
-
         Trade trade = new Trade(userTradeRequest.getConsumer(), userTradeRequest.getProuder(), userTradeRequest.getGoodsId(), userTradeRequest.getPrice(),
                 userTradeRequest.getTradeType());
 

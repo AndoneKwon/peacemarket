@@ -1,11 +1,10 @@
 package com.jpaex.board.web.dto;
 
-import com.jpaex.board.domain.posts.Post;
+import com.hanium.common.model.board.Post;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.context.annotation.Bean;
 
 @Getter
 @Setter

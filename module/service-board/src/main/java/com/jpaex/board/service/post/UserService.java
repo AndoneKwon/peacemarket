@@ -1,7 +1,7 @@
 package com.jpaex.board.service.post;
 
-import com.jpaex.board.domain.posts.User;
-import com.jpaex.board.domain.posts.UserRepository;
+import com.hanium.common.model.board.User;
+import com.hanium.common.model.board.UserRepository;
 import com.jpaex.board.web.dto.UserJoinDto;
 import com.jpaex.board.web.dto.UserLoginRequestDto;
 import lombok.RequiredArgsConstructor;

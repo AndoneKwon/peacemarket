@@ -1,6 +1,6 @@
 package com.jpaex.board.web.dto;
 
-import com.jpaex.board.domain.posts.User;
+import com.hanium.common.model.board.User;
 import lombok.Builder;
 import lombok.Setter;
 import org.slf4j.Logger;

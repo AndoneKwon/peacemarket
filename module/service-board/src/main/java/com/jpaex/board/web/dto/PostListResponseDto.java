@@ -1,6 +1,6 @@
 package com.jpaex.board.web.dto;
 
-import com.jpaex.board.domain.posts.Post;
+import com.hanium.common.model.board.Post;
 import lombok.Getter;
 
 @Getter

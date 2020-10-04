@@ -1,5 +1,6 @@
-package com.jpaex.board.domain.posts;
+package com.hanium.common.repository;
 
+import com.hanium.common.model.board.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

@@ -1,4 +1,4 @@
-package com.jpaex.board.domain;
+package com.hanium.common.model.audit;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;

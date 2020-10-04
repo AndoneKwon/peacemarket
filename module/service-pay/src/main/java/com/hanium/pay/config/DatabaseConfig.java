@@ -1,4 +1,4 @@
-package com.hanium.common.config;
+package com.hanium.pay.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

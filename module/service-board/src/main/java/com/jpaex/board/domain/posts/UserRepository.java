@@ -1,6 +1,5 @@
-package com.hanium.common.repository;
+package com.jpaex.board.domain.posts;
 
-import com.hanium.common.model.board.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

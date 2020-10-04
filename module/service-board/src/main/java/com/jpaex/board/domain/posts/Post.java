@@ -1,6 +1,6 @@
-package com.hanium.common.model.board;
+package com.jpaex.board.domain.posts;
 
-import com.hanium.common.model.audit.BaseTimeEntity;
+import com.jpaex.board.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,8 +1,8 @@
-package com.hanium.common.model.board;
+package com.jpaex.board.domain.posts;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.hanium.common.model.audit.BaseTimeEntity;
+import com.jpaex.board.domain.BaseTimeEntity;
 import com.sun.istack.Nullable;
 import lombok.*;
 

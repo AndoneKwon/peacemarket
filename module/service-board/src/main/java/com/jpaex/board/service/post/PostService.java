@@ -1,7 +1,7 @@
 package com.jpaex.board.service.post;
 
-import com.hanium.common.model.board.Post;
-import com.hanium.common.model.board.PostRepository;
+import com.jpaex.board.domain.posts.Post;
+import com.jpaex.board.domain.posts.PostRepository;
 import com.jpaex.board.web.dto.PostListResponseDto;
 import com.jpaex.board.web.dto.PostResponseDto;
 import com.jpaex.board.web.dto.PostSaveRequestDto;

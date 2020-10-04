@@ -1,7 +1,7 @@
 package com.jpaex.board.web;
 
-import com.hanium.common.model.board.Post;
-import com.hanium.common.model.board.PostRepository;
+import com.jpaex.board.domain.posts.Post;
+import com.jpaex.board.domain.posts.PostRepository;
 import com.jpaex.board.web.dto.PostUpdateRequestDto;
 import org.junit.After;
 import org.junit.Before;

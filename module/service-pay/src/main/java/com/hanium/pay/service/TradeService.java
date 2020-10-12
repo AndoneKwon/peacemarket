@@ -1,13 +1,15 @@
 package com.hanium.pay.service;
 
 
+import com.hanium.pay.model.Product;
+import com.hanium.pay.model.ProductType;
 import com.hanium.pay.model.Trade;
-import com.hanium.pay.payload.request.UserPoint;
+import com.hanium.pay.model.User;
+import com.hanium.pay.repository.ProductRepository;
 import com.hanium.pay.repository.TradeRepository;
+import com.hanium.pay.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
 import javax.transaction.Transactional;
 
 @Service
@@ -17,23 +19,32 @@ public class TradeService {
     TradeRepository tradeRepository;
 
     @Autowired
-    RestTemplate template;
+    UserRepository userRepository;
+
+    @Autowired
+    ProductRepository productRepository;
 
     //요청처리
     @Transactional
     public void tradeHandling(Trade trade){
+        //seller 포인트 추가
+        User seller = userRepository.findById(trade.getSellerId()).get();
+        Long nowSellerAmount = seller.getAmount();
+        seller.setAmount(nowSellerAmount+trade.getPrice());
 
-        int result = -1;
+        //purchaser 포인트 차감
+        User purchaser = userRepository.findById(trade.getPurchaserId()).get();
+        Long nowPurchaserAmount = purchaser.getAmount();
+        purchaser.setAmount(nowPurchaserAmount - trade.getPrice());
 
-        UserPoint consumerTest = new UserPoint("abc", "200");
-        UserPoint ProducerTest = new UserPoint("abc", "200");
-
-        //consumer 포인트 차감
-
-        //producer 포인트 차감
-
+        //상품 수정
+        Product product = productRepository.findById(trade.getPurchaserId()).get();
+        product.setProductType(ProductType.OUT);
 
         //거래로그 생성
+        userRepository.save(seller);
+        userRepository.save(purchaser);
+        productRepository.save(product);
         tradeRepository.save(trade);
     }
 

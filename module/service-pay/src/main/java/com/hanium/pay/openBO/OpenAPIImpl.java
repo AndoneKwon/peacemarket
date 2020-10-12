@@ -70,11 +70,9 @@ public class OpenAPIImpl implements OpenAPI{
 
         result = openAPICall.call(BASE_URL, GET_TOKEN, body, HttpMethod.POST, "");
 
-
-        JsonParser parser = new JsonParser();
-        JsonElement element = parser.parse(result);
-        access_Token = element.getAsJsonObject().get("access_token").getAsString();
-        refresh_Token = element.getAsJsonObject().get("refresh_token").getAsString();
+        FastParser fastParser = FastParser.create(result);
+        access_Token = fastParser.getString("access_token");
+        refresh_Token = fastParser.getString("refresh_token");
 
         List<String> tokens = new ArrayList<>();
         tokens.add(access_Token);

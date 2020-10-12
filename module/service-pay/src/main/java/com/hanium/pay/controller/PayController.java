@@ -27,72 +27,10 @@ public class PayController {
     @Autowired
     private TradeService tradeService;
 
-
-//    @RequestMapping(value = "/test", method = RequestMethod.GET)
-//    public RedirectView Test(){
-//
-//        RedirectView redirectView = new RedirectView();
-//        redirectView.setUrl(OpenAPI.CALL_BACK_URL);
-//        return redirectView;
-//
-//    }
-
-//    @RequestMapping(value = "/test2", method = RequestMethod.GET)
-//    public String Test2(){
-//
-//        URI uri = URI.create("localhost:8080/test3");
-//
-//        UserPoint userPoint = new UserPoint("dsfsf", "16165");
-//
-//        System.out.println(userPoint);
-//
-//        ParticipationRequest tempPart = new ParticipationRequest("TEST URL", userPoint);
-//
-//        RequestEntity<Object> request =
-//                RequestEntity.post(uri)
-//                        .header(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON_VALUE)
-//                        .accept(MediaType.APPLICATION_JSON)
-//                        .body(tempPart.getRequestBody());
-//
-//        System.out.println(request.getBody());
-//
-//        return "ABC";
-//
-//
-//    }
-
-
-//    @RequestMapping(value ="/auth", method=RequestMethod.GET)
-//    public void OpenAuth(HttpServletResponse response){
-//        String auth_Code = open.getAuthCode();
-//    }
-
-//    @RequestMapping(value="/login", method = RequestMethod.GET)
-//    public String OpenLogin(@RequestParam("code") String code, HttpServletResponse response ) {
-//
-//        List<String> tokens = open.getAccessToken(co
-//        log.info("code  : " + code +"\n"+ "Aceess : " + tokens.get(0)+"\n" + "Refresh : " + tokens.get(1));
-//
-//        String acces_token = new String(tokens.get(0));
-//        String refresh_token = new String(tokens.get(1));
-//
-//        return acces_token;
-//
-//    }
-
     @PostMapping("/trade")
-    public ResponseEntity<?> trade(@Valid @RequestBody UserTradeRequest userTradeRequest){
-
-
-
-        //여기서 관련된 API소스들 호출함(외부 DB 연결 API 호출)
-
-
-        Trade trade = new Trade(userTradeRequest.getConsumer(), userTradeRequest.getProuder(), userTradeRequest.getGoodsId(), userTradeRequest.getPrice(),
-                userTradeRequest.getTradeType());
+    public ResponseEntity<?> trade(@Valid @RequestBody Trade trade){
 
         tradeService.tradeHandling(trade);
-
 
         return new ResponseEntity(new APIResponse(true, "Success"), HttpStatus.OK);
 

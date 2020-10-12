@@ -1,7 +1,5 @@
 package com.hanium.pay.controller;
 
-
-import com.hanium.pay.openBO.OpenAPI;
 import com.hanium.pay.openBO.OpenAPIImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -3,7 +3,7 @@ package com.hainum.chat.config;
 import java.util.Map;
 
 import com.google.common.collect.ImmutableMap;
-import com.hainum.chat.payload.ChattingMessage;
+import com.hainum.chat.payload.MessageDto;
 import org.apache.kafka.common.serialization.IntegerDeserializer;
 import org.apache.kafka.common.serialization.IntegerSerializer;
 import org.springframework.context.annotation.Bean;
@@ -17,18 +17,14 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 @EnableKafka
 @Configuration
 public class KafkaConfig {
-    //Sender config
-    @Bean
-    public ProducerFactory<String, ChattingMessage> producerFactory() {
-        return new DefaultKafkaProducerFactory<>(producerConfigs(), null, new JsonSerializer<ChattingMessage>());
+    public ProducerFactory<String, MessageDto> producerFactory() {
+        return new DefaultKafkaProducerFactory<>(producerConfigs(), null, new JsonSerializer<MessageDto>());
     }
 
-    @Bean
-    public KafkaTemplate<String, ChattingMessage> kafkaTemplate() {
+    public KafkaTemplate<String, MessageDto> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 
-    @Bean
     public Map<String, Object> producerConfigs() {
 
         return ImmutableMap.<String, Object>builder()
@@ -39,19 +35,16 @@ public class KafkaConfig {
                 .build();
     }
     //Receiver config
-    @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, ChattingMessage> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, ChattingMessage> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    public ConcurrentKafkaListenerContainerFactory<String, MessageDto> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, MessageDto> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }
 
-    @Bean
-    public ConsumerFactory<String, ChattingMessage> consumerFactory() {
-        return new DefaultKafkaConsumerFactory<>(consumerConfigs(), null, new JsonDeserializer<>(ChattingMessage.class));
+    public ConsumerFactory<String, MessageDto> consumerFactory() {
+        return new DefaultKafkaConsumerFactory<>(consumerConfigs(), null, new JsonDeserializer<>(MessageDto.class));
     }
 
-    @Bean
     public Map<String, Object> consumerConfigs() {
         return ImmutableMap.<String, Object>builder()
                 .put("bootstrap.servers", "localhost:9092")

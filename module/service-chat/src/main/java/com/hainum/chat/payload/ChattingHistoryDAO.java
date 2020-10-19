@@ -15,17 +15,17 @@ import java.util.stream.Collectors;
 public class ChattingHistoryDAO {
 
     // A simple cache for temporarily storing chat data
-    private final Cache<UUID, ChattingMessage> chatHistoryCache = CacheBuilder
+    private final Cache<UUID, MessageDto> chatHistoryCache = CacheBuilder
             .newBuilder().maximumSize(20).expireAfterWrite(10, TimeUnit.MINUTES)
             .build();
 
-    public void save(ChattingMessage chatObj) {
+    public void save(MessageDto chatObj) {
         this.chatHistoryCache.put(UUID.randomUUID(), chatObj);
     }
 
-    public List<ChattingMessage> get() {
+    public List<MessageDto> get() {
         return chatHistoryCache.asMap().values().stream()
-                .sorted(Comparator.comparing(ChattingMessage::getTimeStamp))
+                .sorted(Comparator.comparing(MessageDto::getTimeStamp))
                 .collect(Collectors.toList());
     }
 

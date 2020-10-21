@@ -26,7 +26,6 @@ public class KafkaConfig {
     }
 
     public Map<String, Object> producerConfigs() {
-
         return ImmutableMap.<String, Object>builder()
                 .put("bootstrap.servers", "localhost:9092")//kafka server ip & port
                 .put("key.serializer", IntegerSerializer.class)
@@ -34,6 +33,7 @@ public class KafkaConfig {
                 .put("group.id", "spring-boot-test") // chatting  group id
                 .build();
     }
+
     //Receiver config
     public ConcurrentKafkaListenerContainerFactory<String, MessageDto> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, MessageDto> factory = new ConcurrentKafkaListenerContainerFactory<>();

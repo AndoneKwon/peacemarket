@@ -26,7 +26,7 @@ public class ChattingController {
     private static String BOOT_TOPIC = "kafka-chatting";
 
     @PostMapping("/message")
-    public void sendMessage(@RequestHeader Object headers, @RequestBody MessageDto message){
+    public void sendMessage(@RequestHeader(value = "authorization") String headers, @RequestBody MessageDto message){
         message.setTimeStamp(System.currentTimeMillis());
         //chattingHistoryDAO.save(message);
         sender.send(BOOT_TOPIC, message);

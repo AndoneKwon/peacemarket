@@ -5,11 +5,13 @@ import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Properties;
+import java.util.concurrent.Future;
 
 @Component
 @RequiredArgsConstructor
@@ -25,8 +27,8 @@ public class KafkaChatSender {
 		props.put("key.serializer","org.apache.kafka.common.serialization.StringSerializer");
 		props.put("value.serializer","org.apache.kafka.common.serialization.StringSerializer");
 
-		Producer<String,String> producer = new KafkaProducer<String, String>(props);
-		producer.send(new ProducerRecord<String, String>("kafka-chatting","Apache Kafka is a distributed streaming platform"));
+		Producer<String,MessageDto> producer = new KafkaProducer<String, MessageDto>(props);
+		producer.send(new ProducerRecord<String, MessageDto>("kafka-chatting", data));
 		producer.close();
 		//kafkaTemplate.send(topic, data);// send to react clients via websocket(STOMP)
 	}

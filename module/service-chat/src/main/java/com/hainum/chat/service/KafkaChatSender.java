@@ -32,7 +32,4 @@ public class KafkaChatSender {
 		producer.close();
 		//kafkaTemplate.send(topic, data);// send to react clients via websocket(STOMP)
 	}
-
-	
-
 }

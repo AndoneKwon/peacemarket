@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Builder
 @Getter
@@ -13,28 +15,13 @@ import java.io.Serializable;
 @ToString
 public class MessageDto implements Serializable {
     private String message;
-    private String user;
-    private Long timeStamp;
+    private int user;
+    private LocalDate timeStamp;
+    private int roomNum;
 
-    private String fileName;
-    private String rawData;
-
-    public MessageDto() {
-    }
-
-    public MessageDto(String message, String user) {
+    public MessageDto(String message, int user, int roomNum) {
         this.user = user;
         this.message = message;
-    }
-
-    public MessageDto(String fileName, String rawData, String user) {
-
-        this.fileName = fileName;
-        this.rawData = rawData;
-        this.user = user;
-    }
-
-    public MessageDto(String message) {
-        this.message = message;
+        this.roomNum=roomNum;
     }
 }

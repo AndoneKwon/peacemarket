@@ -1,5 +1,7 @@
 package com.hainum.chat.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hainum.chat.payload.MessageDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -22,13 +24,15 @@ public class KafkaChatSender {
 	Properties props = new Properties();
 
 
-	public void send(String topic, MessageDto data) {
+	public void send(String topic, MessageDto data) throws JsonProcessingException {
 		props.put("bootstrap.servers","localhost:9092");
 		props.put("key.serializer","org.apache.kafka.common.serialization.StringSerializer");
 		props.put("value.serializer","org.apache.kafka.common.serialization.StringSerializer");
+		ObjectMapper objectMapper = new ObjectMapper();
+		String retVal = objectMapper.writeValueAsString(data);
 
-		Producer<String,MessageDto> producer = new KafkaProducer<String, MessageDto>(props);
-		producer.send(new ProducerRecord<String, MessageDto>("kafka-chatting", data));
+		Producer<String,String > producer = new KafkaProducer<String, String>(props);
+		producer.send(new ProducerRecord<String, String>("kafka-chatting", retVal));
 		producer.close();
 		//kafkaTemplate.send(topic, data);// send to react clients via websocket(STOMP)
 	}

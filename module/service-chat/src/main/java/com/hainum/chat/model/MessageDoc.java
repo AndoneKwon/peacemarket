@@ -11,15 +11,17 @@ import java.util.Date;
 @Data
 @Document(collection = "post-capston")
 public class MessageDoc {
+
+    @Id
+    String id;
     private int userId;
-    private int roomNum;
+    private int roomnum;
     private String message;
     private String createdAt = LocalDate.now().toString();
 
-    @Builder
-    MessageDoc(int userId, int roomNum, String message){
+    MessageDoc(int userId, int roomnum, String message){
         this.userId=userId;
-        this.roomNum=roomNum;
+        this.roomnum=roomnum;
         this.message=message;
     }
 }

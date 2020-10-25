@@ -13,18 +13,18 @@ import java.util.HashMap;
 @RequiredArgsConstructor
 public class KafkaChatReceiver {
 
-	private final SimpMessagingTemplate template;
+	//private final SimpMessagingTemplate template;
 
 	@KafkaListener(id = "main-listener", topics = "kafka-chatting")
 	public void receive(MessageDto message) throws Exception {
 		HashMap<String, String> msg = new HashMap<>();
-		msg.put("timestamp", Long.toString(message.getTimeStamp()));
+		msg.put("timestamp", message.getTimeStamp().toString());
 		msg.put("message", message.getMessage());
-		msg.put("author", message.getUser());
+		msg.put("user", message.getNickname());
 
 		ObjectMapper mapper = new ObjectMapper();
 		String json = mapper.writeValueAsString(msg);
 
-		this.template.convertAndSend("/topic/public", json);
+		//this.template.convertAndSend("/topic/public", json);
 	}
 }

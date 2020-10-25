@@ -5,6 +5,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface MessageMongoDBRepository extends MongoRepository<MessageDto, String> {
-    List<MessageDoc> findByRoomNum(int roomNum);
+public interface MessageMongoDBRepository extends MongoRepository<MessageDoc, String> {
+    List<MessageDoc> findAllByRoomnum(int roommum);
 }

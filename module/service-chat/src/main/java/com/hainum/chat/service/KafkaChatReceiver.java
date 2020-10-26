@@ -1,30 +1,44 @@
 package com.hainum.chat.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hainum.chat.payload.MessageDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Properties;
 
 @Service
 @RequiredArgsConstructor
 public class KafkaChatReceiver {
 
-	//private final SimpMessagingTemplate template;
+	Properties props = new Properties();
+	private final SimpMessagingTemplate webSocket;
 
-	@KafkaListener(id = "main-listener", topics = "kafka-chatting")
-	public void receive(MessageDto message) throws Exception {
-		HashMap<String, String> msg = new HashMap<>();
-		msg.put("timestamp", message.getTimeStamp().toString());
-		msg.put("message", message.getMessage());
-		msg.put("user", message.getNickname());
+	@KafkaListener(topics = "kafka-chatting",groupId = "test-consumer-group")
+	public void consumer(String message) throws Exception {
+		props.put("bootstrap.servers","localhost:9092");
+		props.put("key.deserializer","org.apache.kafka.common.serialization.StringDeserializer");
+		props.put("value.deserializer","org.apache.kafka.common.serialization.StringDeserializer");
+		ObjectMapper objectMapper = new ObjectMapper();
+		KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(props);
+		String json = objectMapper.writeValueAsString(message);
 
-		ObjectMapper mapper = new ObjectMapper();
-		String json = mapper.writeValueAsString(msg);
 
 		//this.template.convertAndSend("/topic/public", json);
 	}
+
+	@MessageMapping("/chat")
+	@SendTo("/topic/messages")
+	public void SendMessage(String message){
+		webSocket.convertAndSend("topics/api",message);
+	}
+
 }

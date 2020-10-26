@@ -1,11 +1,14 @@
 package com.hainum.chat.config;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import com.google.common.collect.ImmutableMap;
 import com.hainum.chat.payload.MessageDto;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.IntegerDeserializer;
 import org.apache.kafka.common.serialization.IntegerSerializer;
+import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -17,21 +20,16 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 @EnableKafka
 @Configuration
 public class KafkaConfig {
-    public ProducerFactory<String, MessageDto> producerFactory() {
-        return new DefaultKafkaProducerFactory<>(producerConfigs(), null, new JsonSerializer<MessageDto>());
-    }
 
-    public KafkaTemplate<String, MessageDto> kafkaTemplate() {
-        return new KafkaTemplate<>(producerFactory());
-    }
-
-    public Map<String, Object> producerConfigs() {
-        return ImmutableMap.<String, Object>builder()
-                .put("bootstrap.servers", "localhost:9092")//kafka server ip & port
-                .put("key.serializer", IntegerSerializer.class)
-                .put("value.serializer", JsonSerializer.class)//Object json parser
-                .put("group.id", "spring-boot-test") // chatting  group id
-                .build();
+    private Map<String, Object> consumerProps() {
+        Map<String, Object> props = new HashMap<>();
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
+        props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "100");
+        props.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, "15000");
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, IntegerDeserializer.class);
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        return props;
     }
 
     //Receiver config

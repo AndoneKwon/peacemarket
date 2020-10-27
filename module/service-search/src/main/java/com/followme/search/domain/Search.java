@@ -6,23 +6,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Search {
-    private int category;
-    private float grade_avg;
-    private String shopname;
-    private int likenum;
-    private String address;
+    private String title;
+    private int id;
     private String photo;
 
-    public Search(int category,float grade_avg,String shopname,int likenum,String address,String photo){
-        this.shopname = shopname;
-        this.address=address;
-        this.category=category;
-        this.grade_avg=grade_avg;
-        this.likenum=likenum;
+    public Search(String title,int id,String photo){
+        this.title=title;
+        this.id=id;
         this.photo=photo;
-    }
-
-    public Search() {
-
     }
 }

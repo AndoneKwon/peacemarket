@@ -1,23 +1,20 @@
 package com.followme.search.web.dto;
 
 import com.followme.search.domain.Search;
+import lombok.Builder;
 
+@Builder
 public class SearchResponseDto {
 
-    private int category;
-    private float grade_avg;
-    private String menu;
-    private String shopname;
-    private int likenum;
-    private String address;
+    private String title;
+    private String photo;
+    private int id;
 
 
     public SearchResponseDto(Search entity){
-        this.category = entity.getCategory();
-        this.grade_avg = entity.getGrade_avg();
-        this.shopname = entity.getShopname();
-        this.likenum = entity.getLikenum();
-        this.address = entity.getAddress();
+        this.title=entity.getTitle();
+        this.photo=entity.getPhoto();
+        this.id=entity.getId();
     }
 
 }

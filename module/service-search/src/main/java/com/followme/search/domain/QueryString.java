@@ -15,6 +15,6 @@ public class QueryString {
 
     public QueryString(String query){
         this.query = query;
-        this.fields= new String[]{"name", "introduce", "address"};
+        this.fields= new String[]{"title"};
     }
 }

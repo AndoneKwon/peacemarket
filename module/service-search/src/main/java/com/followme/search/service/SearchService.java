@@ -22,7 +22,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -31,7 +33,7 @@ public class SearchService {
     final private ElasticsearchConf elasticsearchConf;
     public JsonNode SearchDoc(int from,String target) throws IOException {
         Map<String,Object> result = new HashMap<>();
-
+        List<SearchResponseDto> reList = new ArrayList<>();
         QueryString queryString = new QueryString(target);
         FullQuery fullQuery= new FullQuery(from,5,queryString);
 
@@ -56,10 +58,13 @@ public class SearchService {
         document2=document.get("hits").get("hits");
 
         elasticsearchConf.getRestClient().close();
-/*
-        search.setAddress(document2.get("_source").get("address").toString());
-        search.setCategory(document2.get("_source").get("catagory").toString());
-*/
+        for(int i=0;i<document2.size();i++) {
+            reList.add(SearchResponseDto.builder()
+                    .id(document2.get(i).get("_id").asInt())
+                    .title(document2.get(i).get("_source").get("title").asText())
+                    .photo(document2.get(i).get("_source").get("photo1").asText())
+                    .build());//builder 패턴
+        }
         return document2;
     }
 

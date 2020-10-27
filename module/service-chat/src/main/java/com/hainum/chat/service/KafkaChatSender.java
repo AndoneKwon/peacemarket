@@ -31,7 +31,7 @@ public class KafkaChatSender {
 		ObjectMapper objectMapper = new ObjectMapper();
 		String retVal = objectMapper.writeValueAsString(data);
 
-		Producer<String,String > producer = new KafkaProducer<String, String>(props);
+		Producer<String,String> producer = new KafkaProducer<String, String>(props);
 		producer.send(new ProducerRecord<String, String>("kafka-chatting", retVal));
 		producer.close();
 		//kafkaTemplate.send(topic, data);// send to react clients via websocket(STOMP)

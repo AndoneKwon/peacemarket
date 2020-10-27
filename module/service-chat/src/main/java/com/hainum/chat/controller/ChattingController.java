@@ -29,7 +29,6 @@ public class ChattingController {
 
     @PostMapping("/message")
     public void sendMessage(@RequestHeader(value = "authorization") String headers, @RequestBody MessageDto message) throws JsonProcessingException {
-        message.setTimeStamp(LocalDate.now());
         sender.send(BOOT_TOPIC, message);
     }
 

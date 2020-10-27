@@ -16,14 +16,14 @@ public class MessageDto implements Serializable {
     private String message;
     private int user;
     private String nickname;
-    private LocalDate timeStamp;
+    private String timeStamp;
     private int roomNum;
 
     public MessageDto(String message, int user, int roomNum,String nickname) {
         this.user = user;
         this.message = message;
         this.roomNum=roomNum;
-        this.timeStamp=LocalDate.now();
+        this.timeStamp=new Date().toString();
         this.nickname=nickname;
     }
 }

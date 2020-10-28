@@ -15,11 +15,11 @@ public class MessageDoc {
     @Id
     String id;
     private int userId;
-    private int roomnum;
+    private String roomnum;
     private String message;
     private String createdAt = LocalDate.now().toString();
 
-    MessageDoc(int userId, int roomnum, String message){
+    MessageDoc(int userId, String roomnum, String message){
         this.userId=userId;
         this.roomnum=roomnum;
         this.message=message;

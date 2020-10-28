@@ -27,8 +27,10 @@ public class ChattingController {
 
     private static String BOOT_TOPIC = "kafka-chatting";
 
+
+    //@RequestHeader(value = "authorization") String headers
     @PostMapping("/message")
-    public void sendMessage(@RequestHeader(value = "authorization") String headers, @RequestBody MessageDto message) throws JsonProcessingException {
+    public void sendMessage(@RequestBody MessageDto message) throws JsonProcessingException {
         sender.send(BOOT_TOPIC, message);
     }
 

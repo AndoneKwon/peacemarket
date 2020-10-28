@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @Setter
 public class ChattingHistoryDto {
     private int userId;
-    private int roomnum;
+    private String roomnum;
     private String message;
     private String createdAt = LocalDate.now().toString();
 

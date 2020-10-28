@@ -8,6 +8,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/images/**").addResourceLocations("file:///D:/practice/PostApiSpring/src/main/resources/static/img/").setCachePeriod(0);
+        registry.addResourceHandler("/images/**").addResourceLocations("file:///D:/practice/img/").setCachePeriod(0);
     }
 }

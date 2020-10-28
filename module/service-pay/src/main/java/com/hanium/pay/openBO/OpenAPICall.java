@@ -1,8 +1,7 @@
 package com.hanium.pay.openBO;
 
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -10,10 +9,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
+import static com.hanium.pay.openBO.OpenAPIConstant.*;
 
 @Component
 @Slf4j
@@ -31,7 +29,7 @@ public class OpenAPICall {
         headers.set("Content-Type", "application/json");
         headers.set("charset", "UTF-8");
 
-        if(url.equals(OpenAPI.GET_TOKEN) || url.equals(OpenAPI.GET_OAUTH));
+        if(url.equals(GET_TOKEN) || url.equals(GET_OAUTH));
         else headers.set("Authorization", "Bearer "+token);
 
         HttpEntity<String> entity = new HttpEntity<>(headers);

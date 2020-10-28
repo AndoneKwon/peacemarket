@@ -1,39 +1,43 @@
 package com.hanium.pay.openBO;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.DataOutput;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.URL;
-import java.net.URLEncoder;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import javax.net.ssl.HttpsURLConnection;
 
+import com.hanium.pay.util.FastParser;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
+
+import static com.hanium.pay.openBO.OpenAPIConstant.*;
 
 @Slf4j
 @Service
+@AllArgsConstructor
 public class OpenAPIImpl implements OpenAPI{
 
-    @Autowired
-    OpenAPICall openAPICall;
+    private final OpenAPICall openAPICall;
+
+    @Value("{openAPI.api}")
+    private final String API_KEY;
+
+    @Value("{openAPI.sercret")
+    private final String SECRET_KEY;
+
+    @Value("{openAPI.state}")
+    private final String STATE;
+
 
 
     @Override
-    public String getAuthorizationCode() throws Exception{
+    public String getAuthorizationCode(){
 
             String body = "response_type=code"+
                     "&client_id="+API_KEY+
@@ -45,20 +49,18 @@ public class OpenAPIImpl implements OpenAPI{
                     "&authorized_cert_yn=N";
 
             return BASE_URL+GET_OAUTH+body;
-
-            //return openAPICall.call(BASE_URL, GET_OAUTH, body, HttpMethod.GET, "");
     }
 
 
     @Override
-    public List<String> getAccessToken(String authorize_code) throws Exception{
+    public List<String> getAccessAndRefreshToken(String authorize_code) throws Exception{
 
         log.info(authorize_code);
 
-        String access_Token = "";
-        String refresh_Token = "";
-        String body = null;
-        String result = null;
+        String access_Token;
+        String refresh_Token;
+        String body;
+        String result;
 
         body = "code=" + authorize_code +
                 "&client_id="+API_KEY +
@@ -68,13 +70,11 @@ public class OpenAPIImpl implements OpenAPI{
 
         result = openAPICall.call(BASE_URL, GET_TOKEN, body, HttpMethod.POST, "");
 
+        FastParser fastParser = FastParser.create(result);
+        access_Token = fastParser.getString("access_token");
+        refresh_Token = fastParser.getString("refresh_token");
 
-        JsonParser parser = new JsonParser();
-        JsonElement element = parser.parse(result);
-        access_Token = element.getAsJsonObject().get("access_token").getAsString();
-        refresh_Token = element.getAsJsonObject().get("refresh_token").getAsString();
-
-        List<String> tokens = new ArrayList<String>();
+        List<String> tokens = new ArrayList<>();
         tokens.add(access_Token);
         tokens.add(refresh_Token);
 
@@ -86,25 +86,23 @@ public class OpenAPIImpl implements OpenAPI{
     public List<String> refreshAccessToken(String accessToken) throws Exception{
 
 
-        String access_Token = "";
+        String access_Token;
         String refresh_Token = "";
-        String body = null;
-        String result = null;
+        String body;
+        String result;
+        List<String> tokens = new ArrayList<>();
 
         body = "refresh_token=" + refresh_Token +
                 "&client_id="+API_KEY +
                 "&client_secret="+SECRET_KEY +
-                "&scope="+OpenAPI.LOGIN_POLICY;
+                "&scope="+LOGIN_POLICY;
 
         result = openAPICall.call(BASE_URL, GET_TOKEN, body, HttpMethod.POST, "");
 
+        FastParser fastParser = FastParser.create(result);
+        access_Token = fastParser.getString("access_token");
+        refresh_Token = fastParser.getString("refresh_token");
 
-        JsonParser parser = new JsonParser();
-        JsonElement element = parser.parse(result);
-        access_Token = element.getAsJsonObject().get("access_token").getAsString();
-        refresh_Token = element.getAsJsonObject().get("refresh_token").getAsString();
-
-        List<String> tokens = new ArrayList<String>();
         tokens.add(access_Token);
         tokens.add(refresh_Token);
 

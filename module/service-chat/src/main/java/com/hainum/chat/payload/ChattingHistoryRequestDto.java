@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ChattingHistoryRequestDto {
-    private int roomNum;
+    private String roomNum;
 
 }

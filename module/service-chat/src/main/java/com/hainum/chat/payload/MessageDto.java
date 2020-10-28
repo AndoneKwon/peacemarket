@@ -17,9 +17,9 @@ public class MessageDto implements Serializable {
     private int user;
     private String nickname;
     private String timeStamp;
-    private int roomNum;
+    private String roomNum;
 
-    public MessageDto(String message, int user, int roomNum,String nickname) {
+    public MessageDto(String message, int user, String roomNum,String nickname) {
         this.user = user;
         this.message = message;
         this.roomNum=roomNum;

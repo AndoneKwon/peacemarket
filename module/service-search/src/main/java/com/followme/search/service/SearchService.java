@@ -45,7 +45,7 @@ public class SearchService {
         final HttpEntity httpEntity = new NStringEntity(JsonData, ContentType.APPLICATION_JSON);
 
 
-        Request request = new Request("POST","/infos_table/_search");
+        Request request = new Request("POST","/capston/_search");
         request.addParameter("pretty","true");
         request.setEntity(httpEntity);
         Response response = elasticsearchConf.getRestClient().performRequest(request);

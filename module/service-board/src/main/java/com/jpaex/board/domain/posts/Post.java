@@ -15,14 +15,14 @@ import javax.persistence.*;
 public class Post extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id;//상품번호
 
     @Column(length = 500, nullable = false)
-    private String title;
+    private String title;//제목
 
     @Column(columnDefinition = "TEXT")
-    private String content;
-    private String author;
+    private String content;//상품설명
+    private String author;//올린사람
 
     @ColumnDefault("null")
     private String photo1;

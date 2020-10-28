@@ -11,6 +11,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.HashMap;
 import java.util.Properties;
@@ -22,23 +23,23 @@ public class KafkaChatReceiver {
 	Properties props = new Properties();
 	private final SimpMessagingTemplate webSocket;
 
+	@CrossOrigin(origins = "*")
 	@KafkaListener(topics = "kafka-chatting",groupId = "test-consumer-group")
 	public void consumer(String message) throws Exception {
 		props.put("bootstrap.servers","localhost:9092");
 		props.put("key.deserializer","org.apache.kafka.common.serialization.StringDeserializer");
 		props.put("value.deserializer","org.apache.kafka.common.serialization.StringDeserializer");
 		ObjectMapper objectMapper = new ObjectMapper();
-		KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(props);
 		String json = objectMapper.writeValueAsString(message);
-
-
-		//this.template.convertAndSend("/topic/public", json);
+		JsonNode document = objectMapper.readTree(message);
+		String roomNum = document.get("roomNum").toString().replaceAll("\"","");
+		SendMessage(json,roomNum);
 	}
 
-	@MessageMapping("/chat")
-	@SendTo("/topic/messages")
-	public void SendMessage(String message){
-		webSocket.convertAndSend("topics/api",message);
+
+	public String SendMessage(String message,String roomNum){
+		webSocket.convertAndSend("/topic/"+roomNum,message);
+		return message;
 	}
 
 }

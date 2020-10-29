@@ -29,7 +29,7 @@ public class SearchService {
         Map<String,Object> result = new HashMap<>();
         List<SearchResponseDto> reList = new ArrayList<>();
         QueryString queryString = new QueryString(target);
-        FullQuery fullQuery= new FullQuery(from,5,queryString);
+        FullQuery fullQuery= new FullQuery(from,10,queryString);
         String JsonData;
 
         Gson gson = new Gson();
@@ -56,6 +56,7 @@ public class SearchService {
                     .id(document2.get(i).get("_source").get("id").asInt())
                     .title(document2.get(i).get("_source").get("title").asText())
                     .photo(document2.get(i).get("_source").get("photo").asText())
+                    .author(document2.get(i).get("_source").get("author").asText())
                     .build());//builder 패턴
         }
         return document2;

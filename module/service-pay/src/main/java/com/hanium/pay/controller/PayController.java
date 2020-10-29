@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@CrossOrigin(origins = "*")
 @RestController
 @Slf4j
 public class PayController {

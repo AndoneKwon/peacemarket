@@ -14,12 +14,14 @@ public class SearchResponseDto {
     private int id;
     private String title;
     private String photo;
+    private String author;
 
 
     public SearchResponseDto(Search entity){
         this.id=entity.getId();
         this.title=entity.getTitle();
         this.photo=entity.getPhoto();
+        this.author=entity.getAuthor();
     }
 
 }

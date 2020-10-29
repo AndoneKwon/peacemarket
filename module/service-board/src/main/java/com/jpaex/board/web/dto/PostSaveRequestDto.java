@@ -24,9 +24,11 @@ public class PostSaveRequestDto {
     private String photo8;
     private String photo9;
     private String photo10;
+    private int price;
+    private Long authorId;
 
     @Builder
-    public PostSaveRequestDto(String title, String content, String author,String photo1,String photo2,String photo3,String photo4,String photo5,String photo6,String photo7,String photo8,String photo9,String photo10){
+    public PostSaveRequestDto(String title, String content, String author,String photo1,String photo2,String photo3,String photo4,String photo5,String photo6,String photo7,String photo8,String photo9,String photo10,int price, Long authorId){
         this.title = title;
         this.content = content;
         this.author = author;
@@ -40,6 +42,8 @@ public class PostSaveRequestDto {
         this.photo8 = photo8;
         this.photo9 = photo9;
         this.photo10 = photo10;
+        this.price=price;
+        this.authorId=authorId;
     }
 
     public Post toEntity(){
@@ -57,6 +61,8 @@ public class PostSaveRequestDto {
                 .photo8(photo8)
                 .photo9(photo9)
                 .photo10(photo10)
+                .price(price)
+                .authorId(authorId)
                 .build();
     }
 }

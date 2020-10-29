@@ -13,14 +13,14 @@ public class FullQuery {
     public FullQuery(Object query_string){
         this.from = 0;
         this.size = size;
-        this._source = new String[] {"title", "_id", "photo1"};
+        this._source = new String[] {"title", "id", "photo"};
         this.query=new Query(query_string);
     }
 
     public FullQuery(int from, int size,Object query_string){
         this.from = from;
         this.size = size;
-        this._source = new String[] {"title", "_id", "photo1"};
+        this._source = new String[] {"title", "id", "photo"};
         this.query=new Query(query_string);
     }
 }

@@ -15,6 +15,24 @@ var isEmpty = function (value) {
   }
 };
 
+
+router.get('/myinfo', function(req, res, next) {
+  console.log(req.headers.authorization);
+  var authenticate=jwt.decode(req.headers.authorization,process.env.JWT_SECRET);
+  console.log(authenticate.user_id);
+  User.findOne({where:{
+    id:authenticate.user_id
+  }})
+  .then(result=>{
+    console.log(res.email);
+    res.json({
+      email:result.email,
+      nickname:result.nickname,
+      amount:result.amount
+    });
+  })
+});
+
 router.post('/login', function(req, res, next) {
   try{
     passport.authenticate('local', {session : false}, async (authError, user, info) => {

@@ -17,34 +17,10 @@ spring:
   datasource:
     hikari:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://127.0.0.1:3306/test?serverTimezone=UTC&characterEncoding=UTF-8
-      username: user
-      password: user
-      connection-test-query: SELECT 1
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/capston?serverTimezone=UTC&characterEncoding=UTF-8
+      username: root
+      password: root
 ---
-spring:
-  profiles: mongodb
-  data:
-    mongodb:
-      authentication-database: admin
-      username: cat
-      password: whqudrkq
-      database: log
-      port: 27017
-      host: 101.101.209.211
----
-spring:
-  profiles: redis
-  redis:
-    lettuce:
-      pool:
-        max-idle: 10
-        max-active: 10
-        min-idle: 2
-    port: 6379
-    host: 49.50.166.168
----
-
 #constant
 openAPI:
   api: j9mhYBLjb2uQL9PFIhB1FKNUnu3t8AX0Mh7bO08M

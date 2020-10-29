@@ -22,7 +22,7 @@ public class Trade {
 
     private Long sellerId;
 
-    private Long purchaserId;
+    private Long consumerId;
 
     private Long productId;
 

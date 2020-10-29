@@ -14,7 +14,7 @@ dependencies {
     implementation 'org.springframework.kafka:spring-kafka'
     implementation 'mysql:mysql-connector-java'
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'com.auth0:java-jwt:3.1.0'
+    implementation 'com.auth0:java-jwt:3.10.3'
     compileOnly 'org.projectlombok:lombok'
     testCompileOnly('org.projectlombok:lombok')
     runtimeOnly 'mysql:mysql-connector-java'

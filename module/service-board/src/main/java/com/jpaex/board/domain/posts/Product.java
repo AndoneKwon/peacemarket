@@ -1,24 +1,27 @@
-package com.hanium.pay.model;
+package com.jpaex.board.domain.posts;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-
 @Entity
 @Getter
 @Setter
-public class User {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
     private Long id;
+
+    private Long post_id;
 
     private String name;
 
-    private String status;
+    private String type;
 
-    private Long amount;
+    @Enumerated(EnumType.STRING)
+    private ProductType productType;
+
+    private int price;
 
 
 }

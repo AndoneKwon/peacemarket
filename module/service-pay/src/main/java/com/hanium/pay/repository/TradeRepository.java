@@ -10,8 +10,4 @@ import java.util.List;
 @Repository
 public interface TradeRepository extends JpaRepository<Trade, Long> {
 
-    List<Trade> findByConsumer(String consumer);
-
-    List<Trade> findByProducer(String producer);
-
 }

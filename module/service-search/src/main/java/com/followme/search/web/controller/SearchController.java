@@ -11,10 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Map;
 
+@CrossOrigin(origins = "*")
 @AllArgsConstructor
 @RestController
 public class SearchController {
     private final SearchService searchService;
+
 
     @PostMapping("/search")
     public JsonNode search(@RequestBody SearchRequestDto searchRequestDto) throws IOException {

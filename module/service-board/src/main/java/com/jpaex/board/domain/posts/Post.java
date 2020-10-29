@@ -1,6 +1,7 @@
 package com.jpaex.board.domain.posts;
 
 import com.jpaex.board.domain.BaseTimeEntity;
+import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,9 +45,13 @@ public class Post extends BaseTimeEntity {
     private String photo9;
     @ColumnDefault("null")
     private String photo10;
+    @ColumnDefault("0")
+    private int price;
+    @NotNull
+    private Long authorId;
 
     @Builder
-    public Post(String title,String content,String author,String photo1,String photo2,String photo3,String photo4,String photo5,String photo6,String photo7,String photo8,String photo9,String photo10){
+    public Post(String title,String content,String author,String photo1,String photo2,String photo3,String photo4,String photo5,String photo6,String photo7,String photo8,String photo9,String photo10,int price,Long authorId){
         this.title = title;
         this.content = content;
         this.author = author;
@@ -60,6 +65,8 @@ public class Post extends BaseTimeEntity {
         this.photo8 = photo8;
         this.photo9 = photo9;
         this.photo10 = photo10;
+        this.price=price;
+        this.authorId=authorId;
     }
 
     public void update(String title, String content,String photo1,String photo2,String photo3,String photo4,String photo5,String photo6,String photo7,String photo8,String photo9,String photo10){

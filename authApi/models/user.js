@@ -31,6 +31,12 @@ module.exports = (sequelize, DataTypes)=>(
             allowNull : false,
             defaultValue : sequelize.literal('now()'),
         },
+
+        amount:{ 
+            type:DataTypes.INTEGER,
+            allowNull : false,
+            defaultValue : 0
+        }
     
     },
     

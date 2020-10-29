@@ -1,7 +1,7 @@
 package com.hanium.pay.service;
 
 
-import com.hanium.pay.model.User;
+import com.hanium.pay.model.Users;
 import com.hanium.pay.payload.request.UserChargeRequest;
 import com.hanium.pay.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class ChargerService {
     public void charger(UserChargeRequest userChargeRequest){
 
         if(userRepository.findById(userChargeRequest.getUserId()).isPresent()){
-            User user = userRepository.findById(userChargeRequest.getUserId()).get();
+            Users user = userRepository.findById(userChargeRequest.getUserId()).get();
             Long nowAmount = user.getAmount();
             user.setAmount(nowAmount + userChargeRequest.getAmount());
             userRepository.save(user);

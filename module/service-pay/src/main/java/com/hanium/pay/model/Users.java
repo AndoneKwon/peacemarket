@@ -8,21 +8,20 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-public class Product {
+public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long post_id;
+    private String email;
 
-    private String name;
+    private String nickname;
 
-    private String type;
+    private String phone_num;
 
-    @Enumerated(EnumType.STRING)
-    private ProductType productType;
+    private String salt;
 
-    private Long price;
+    private Long amount;
 
 
 }

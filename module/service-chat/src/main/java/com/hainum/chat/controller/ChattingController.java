@@ -11,6 +11,7 @@ import com.hainum.chat.service.KafkaChatSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class ChattingController {
 
     //@RequestHeader(value = "authorization") String headers
     @PostMapping("/message")
-    public void sendMessage(@RequestBody MessageDto message) throws JsonProcessingException {
+    public void sendMessage(@RequestBody MessageDto message) throws IOException {
         sender.send(BOOT_TOPIC, message);
     }
 

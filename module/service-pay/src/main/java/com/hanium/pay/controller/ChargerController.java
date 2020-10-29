@@ -2,7 +2,7 @@ package com.hanium.pay.controller;
 
 
 import com.hanium.pay.payload.request.UserChargeRequest;
-import com.hanium.pay.payload.response.APIResponse;
+import com.hanium.pay.payload.response.ApiResponse;
 import com.hanium.pay.service.ChargerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ public class ChargerController {
     @PatchMapping(value = "/charge")
     public ResponseEntity<?> userCharge(UserChargeRequest userChargeRequest){
         chargerService.charger(userChargeRequest);
-        return new ResponseEntity<>(new APIResponse(true, "success"), HttpStatus.OK);
+        return new ResponseEntity<>(new ApiResponse(true, "success"), HttpStatus.OK);
     }
 
 
